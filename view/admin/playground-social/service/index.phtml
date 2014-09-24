@@ -1,0 +1,94 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgroundgallery'); ?>
+
+<?php foreach ($this->flashMessenger()->setNamespace('playgroundgallery')->getMessages() as $message): ?>
+    <?php echo  $this->translate($message); ?>
+<?php endforeach ?>
+<?php 
+?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php echo $this->translate('Sort and order your service'); ?></h3>
+    </div>
+    <div class="panel-body">
+        <form class="form" role="form" action="" method="post">
+        <div class="col-xs-6 col-sm-6">
+          <div class="form-group">
+            <input type="hidden" name="filters[category]" value="<?php echo $this->categoryId; ?>" />
+            <label><?php echo $this->translate('Service') ?> : </label> <br />
+            <select name="filters[type]" class="form-control" >
+                <option>Tous</option>
+                <?php foreach ($this->serviceTypes as $type) : ?>
+                    <option value="<?php echo $type; ?>"><?php echo $type; ?></option>
+                <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+         <div class="form-group">
+            <label><?php echo $this->translate('Type de Moderation') ?> : </label> <br />
+            <select name="filters[order]" class="form-control" >
+                <option>Tous</option>
+                <option>En temps réel</option>
+                <option>A priori</option>
+                <option>A posteriori</option>
+            </select>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+            <button type="submit" class="btn btn-success pull-right "><?php echo $this->translate('validate'); ?></button>
+        </form>
+    </div>
+</div>
+<a data-toggle="modal" href="<?php echo $this->url('admin/playgroundsocial_social_service_create'); ?>" type="button" class="btn btn-primary pull-right"><?php echo $this->translate('Add a Service'); ?></a>
+
+<div class="clearfix"></div>
+<h1 class="f-left"><?php echo $this->translate('Services'); ?></h1>
+<div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Locales</th>
+          <th>Type</th>
+          <th>Type of Connection</th>
+          <th>Username</th>
+          <th>Hashtag</th>
+          <th>Type of Moderation</th>
+          <th>Promote</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($this->services as $service)  : ?>
+        <?php $className = ""; ?>
+        <?php if($service->getActive() == 1) : ?>
+            <?php $className = "success"; ?>
+        <?php endif; ?>
+        <tr class="<?php echo $className; ?>">
+            <td><?php echo $service->getId(); ?></td>
+            <td>
+                <?php foreach ($service->getLocales() as $locale)  :?>
+                    <span><img src="<?php echo $locale->getFlag() ?>.png" alt="<?php echo $this->translate($locale->getName()); ?>"/></span>
+                <?php endforeach; ?>
+            </td>
+            <td><?php echo $service->getType(); ?></td>
+            <td><?php echo \PlaygroundSocial\Entity\Service::$connectionTypes[$service->getConnectionType()]; ?></td>
+            <td><?php echo $service->getUsername(); ?></td>
+            <td><?php echo $service->getHashtag(); ?></td>
+            <td><?php echo \PlaygroundSocial\Entity\Service::$moderationTypes[$service->getModerationType()]; ?></td>
+            <td><?php echo \PlaygroundSocial\Entity\Service::$statuses[$service->getPromote()]; ?></td>
+            <td>
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $service->getId())); ?>">
+                    <button type="button" class="btn btn-warning">Edit</button>
+                </a>
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_delete', array('id' => $service->getId())); ?>">
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+</div>
+<hr />

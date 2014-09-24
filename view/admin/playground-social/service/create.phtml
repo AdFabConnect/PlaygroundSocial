@@ -1,0 +1,127 @@
+
+<?php 
+$this->plugin('translate')->setTranslatorTextDomain('playgroundsocial'); 
+$this->formElementErrors()->setTranslatorTextDomain('playgroundsocial');
+$form = $this->form;
+$form->prepare();
+
+if(!empty($service)){
+    $locales = array();
+    foreach ($service->getLocales() as $locale) {
+        $locales[$locale->getId()] = $locale->getName();
+    }
+    $form->get('locales')->setValueOptions($locales);
+}
+?>
+
+
+<?php if(!empty($this->message)) : ?>
+    <div class="alert <?php echo $this->state ?> alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p><?php echo $this->message; ?></p>
+    </div>
+<?php endif; ?>
+
+<?php if(count($this->flashMessages)) : ?>
+    <div class="alert <?php echo $flashMessages[0]; ?> alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p><?php echo $flashMessages[1]; ?></p>
+    </div>
+<?php endif; ?>
+
+
+<div class='row'>
+    <?php echo $this->form()->openTag($form);  ?>
+        <?php echo $this->formInput($form->get('id')); ?>
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('type')); ?>
+            <?php echo $this->formSelect($form->get('type')); ?>
+            <?php echo $this->formElementErrors($form->get('type')) ?>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('connectionType')); ?>
+            <div class="radio">
+              <label>
+                <input type="radio" name="connectionType" class="connectionType" value="1" <?php echo !empty($service) && $service->getConnectionType()=="1"?"checked":"";?> >
+                Acccount
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="connectionType" class="connectionType" value="2" <?php echo !empty($service) && $service->getConnectionType()=="2"?"checked":"";?>>
+                Hashtag
+              </label>
+            </div>    
+        </div>
+        <div class="col-md-6" >
+            <div id="account" style="display:none">
+                <div class="form-group">
+                    <?php echo $this->formLabel($form->get('username')); ?>
+                    <?php echo $this->formInput($form->get('username')); ?>
+                    <?php echo $this->formElementErrors($form->get('username')) ?>
+                </div>  
+                <div class="form-group">
+                    <?php echo $this->formLabel($form->get('password')); ?>
+                    <?php echo $this->formInput($form->get('password')); ?>
+                    <?php echo $this->formElementErrors($form->get('password')) ?>
+                </div>
+            </div>  
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" id="hashtag" style="display:none">
+                <?php echo $this->formLabel($form->get('hashtag')); ?>
+                <?php echo $this->formInput($form->get('hashtag')); ?>
+                <?php echo $this->formElementErrors($form->get('hashtag')) ?>
+            </div>
+        </div>
+        <div class="clearfix">&nbsp;</div> 
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('moderationType')); ?>
+            <?php echo $this->formSelect($form->get('moderationType')); ?>
+            <?php echo $this->formElementErrors($form->get('moderationType')) ?>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('promote')); ?>
+            <?php echo $this->formSelect($form->get('promote')); ?>
+            <?php echo $this->formElementErrors($form->get('promote')) ?>
+        </div>
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('active')); ?>
+            <?php echo $this->formSelect($form->get('active')); ?>
+            <?php echo $this->formElementErrors($form->get('active')) ?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->formLabel($form->get('locales')); ?>
+            <?php echo $this->formSelect($form->get('locales')); ?>
+            <?php echo $this->formElementErrors($form->get('locales')) ?>
+        </div>
+        
+    <div class="clearfix">&nbsp;</div> 
+</div>
+
+<div class="col-md-12">
+    <div class="pull-right">
+        <?php echo $this->formButton($form->get('submit')); ?>
+    </div>
+</div>
+<div class="clearfix">&nbsp;</div> 
+
+ <?php echo $this->form()->closeTag(); ?>
+
+ <?php if(!empty($service)) : ?>
+    <?php if($service->getConnectionType()=="2") : ?>
+        <script>
+            window.onload = function(){
+                $('#hashtag').show();
+            }
+        </script>
+    <?php endif; ?>
+    <?php if($service->getConnectionType()=="1") : ?>
+        <script>
+            window.onload = function(){
+                $('#account').show();
+            }
+        </script>
+    <?php endif; ?>
+ <?php endif; ?>
