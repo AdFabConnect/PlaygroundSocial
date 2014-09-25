@@ -61,7 +61,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($this->services as $service)  : ?>
+        <?php foreach ($this->servicesPaginator as $service)  : ?>
         <?php $className = ""; ?>
         <?php if($service->getActive() == 1) : ?>
             <?php $className = "success"; ?>
@@ -94,3 +94,9 @@
     </table>
 </div>
 <hr />
+<?php $paginator =  $this->paginationControl($this->servicesPaginator , 'Sliding', 'playground-social/partial/pagination.phtml', array('uri' => $this->url('admin/playgroundsocial_social_service'), "countResults" => $this->nbServices)); ?> 
+  <?php if(strlen($paginator) > 10) :?>
+          <div class="divider"></div>
+          <?php echo $paginator; ?>
+  <?php endif; ?>
+  <div class="clearfix"></div>

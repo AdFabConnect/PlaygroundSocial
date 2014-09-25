@@ -11,6 +11,8 @@ namespace PlaygroundSocial\Controller\Admin;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use PlaygroundSocial\Entity\Element;
+use PlaygroundSocial\Entity\Service;
 
 class ElementController extends AbstractActionController
 {
@@ -36,6 +38,43 @@ class ElementController extends AbstractActionController
                                               'services'  => $services,
                                               'elementsPaginator' => $elementsPaginator,
                                               'nbElements' => $nbElements));
+    }
+
+
+    public function moderateAction()
+    {
+        $elementId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $element = $this->getElementService()->getElementMapper()->findById($elementId);
+
+        if($element->getStatus() >= Element::ELEMENT_ACTIVE){
+            $element->setStatus(Element::ELEMENT_NOT_ACTIVE);
+        } else {
+            $element->setStatus(Element::ELEMENT_ACTIVE);
+        }
+
+        $this->getElementService()->getElementMapper()->persist($element);
+
+        return $this->redirect()->toRoute('admin/playgroundsocial_social_element');
+
+
+    }
+
+    public function promoteAction()
+    {
+        $elementId = $this->getEvent()->getRouteMatch()->getParam('id');
+        $element = $this->getElementService()->getElementMapper()->findById($elementId);
+
+        if($element->getService()->getPromote() == Service::SERVICE_ACTIVE) {
+            if($element->getStatus() == Element::ELEMENT_PROMOTE){
+                $element->setStatus(Element::ELEMENT_ACTIVE);
+            } else {
+                $element->setStatus(Element::ELEMENT_PROMOTE);
+            }
+        }
+
+        $this->getElementService()->getElementMapper()->persist($element);
+
+        return $this->redirect()->toRoute('admin/playgroundsocial_social_element');
     }
 
     public function getElementService()

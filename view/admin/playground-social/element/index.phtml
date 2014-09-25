@@ -60,13 +60,13 @@
         <?php foreach ($this->elementsPaginator as $element) : ?>
         <?php $className = ""; ?>
         <?php if($element->getStatus() <= 1) : ?>
-            <?php $className = "success"; ?>
+            <?php $className = "active"; ?>
         <?php endif; ?>
         <?php if($element->getStatus() == 0) : ?>
             <?php $className = "danger"; ?>
         <?php endif; ?>
         <?php if($element->getService()->getPromote() == 1 && $element->getStatus() == 2): ?>
-            <?php $className = "info"; ?>  
+            <?php $className = "success"; ?>  
         <?php endif; ?>
         <tr class="<?php echo $className; ?>">
             <td><?php echo $element->getId(); ?></td>
@@ -79,22 +79,22 @@
               <td>
                 <?php if($element->getService()->getPromote() == 1) : ?>
                   <?php if($element->getStatus() == 1 ) : ?>
-                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_promote', array('id' => $element->getId())); ?>">
                         <button type="button" class="btn btn-info">Promote</button>
                     </a>
                   <?php endif; ?>
                   <?php if($element->getStatus() == 2 ) : ?>
-                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_promote', array('id' => $element->getId())); ?>">
                         <button type="button" class="btn btn-warning">Un Promote</button>
                     </a>
                   <?php endif; ?>
                 <?php endif; ?>
                 <?php if($element->getStatus() == 0 ) : ?>
-                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_moderate', array('id' => $element->getId())); ?>">
                     <button type="button" class="btn btn-warning">Activate</button>
                 </a>
                 <?php else : ?>
-                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_delete', array('id' => $element->getId())); ?>">
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_moderate', array('id' => $element->getId())); ?>">
                     <button type="button" class="btn btn-danger">Desactivate</button>
                 </a>
                 <?php endif; ?>

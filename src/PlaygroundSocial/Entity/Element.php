@@ -18,6 +18,13 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Element implements InputFilterAwareInterface
 {
+    const ELEMENT_PROMOTE = 2;
+    const ELEMENT_ACTIVE = 1;
+    const ELEMENT_NOT_ACTIVE = 0;
+
+    public static $statuses = array(self::ELEMENT_PROMOTE => "promote",
+                                    self::ELEMENT_ACTIVE => "Active",
+                                    self::ELEMENT_NOT_ACTIVE => "Not Active");
     protected $inputFilter;
     /**
      * @ORM\Id

@@ -14,13 +14,23 @@ use Zend\View\Model\ViewModel;
 
 class ServiceController extends AbstractActionController
 {
+    const MAX_PER_PAGE = 20;
+
     public function indexAction()
     {
         $config = $this->getServiceLocator()->get('Config');
         $services = $this->getServiceService()->getServiceMapper()->findAll();
 
+        $p = $this->getRequest()->getQuery('page', 1);
+
+        $nbServices = count($services);
+
+        $servicesPaginator = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($services));
+        $servicesPaginator->setItemCountPerPage(self::MAX_PER_PAGE);
+        $servicesPaginator->setCurrentPageNumber($p);
+
         $viewModel = new ViewModel();
-        return $viewModel->setVariables(array('serviceTypes' => $config["services"], 'services' => $services));
+        return $viewModel->setVariables(array('serviceTypes' => $config["services"], 'servicesPaginator' => $servicesPaginator, 'nbServices'=>  $nbServices, 'services' => $services));
     }
 
     public function createAction()

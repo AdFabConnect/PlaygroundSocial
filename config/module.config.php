@@ -142,6 +142,36 @@ return array(
             ),
             'may_terminate' => true,
           ),
+
+          'playgroundsocial_social_service_moderate' => array(
+            'type' => 'Segment',
+            'options' => array(
+              'route'    => '/social/element/:id/moderate',
+              'defaults' => array(
+                'controller' => 'PlaygroundSocial\Controller\ElementAdmin',
+                'action'     => 'moderate',
+              ),
+              'constraints' => array(
+                'id' => '[0-9]*',
+            ),
+            ),
+            'may_terminate' => true,
+          ),
+
+          'playgroundsocial_social_service_promote' => array(
+            'type' => 'Segment',
+            'options' => array(
+              'route'    => '/social/element/:id/promote',
+              'defaults' => array(
+                'controller' => 'PlaygroundSocial\Controller\ElementAdmin',
+                'action'     => 'promote',
+              ),
+              'constraints' => array(
+                'id' => '[0-9]*',
+            ),
+            ),
+            'may_terminate' => true,
+          ), 
           
           ),
         ),
