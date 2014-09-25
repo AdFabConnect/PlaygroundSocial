@@ -30,7 +30,7 @@ class ApiController extends AbstractActionController
 
         $routes['element'][] = array(
             'routes' => '/api/elements/service/:service',
-            'message' => 'retourne des elements pour les services',
+            'message' => 'retourne des elements pour les services (slug du service)',
             'required params' => array(
                 'service' => '[a-z]*',
             ),
