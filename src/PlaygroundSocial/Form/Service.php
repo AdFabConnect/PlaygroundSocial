@@ -29,6 +29,21 @@ class Service extends ProvidesEventsForm
                 'value' => 0
             )
         ));
+
+        $this->add(array(
+            'name' => 'name',
+            'options' => array(
+                'label' => $translator->translate('Name', 'playgroundsocial'),
+            ),
+            'attributes' => array(
+                'type' => 'text',
+                'placeholder' => $translator->translate('Name', 'playgroundsocial'),
+                'class' => 'form-control'
+            ),
+            'validator' => array(
+                new \Zend\Validator\NotEmpty(),
+            )
+        ));
         
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',

@@ -81,7 +81,6 @@ class EntityMapper
     */
     public function findByAndOrderBy($by = array(), $sortArray = array())
     {
-
         return $this->getEntityRepository()->findBy($by, $sortArray);
     }
 

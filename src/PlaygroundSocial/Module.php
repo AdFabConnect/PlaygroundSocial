@@ -105,13 +105,13 @@ class Module
         $cronjobs = $e->getParam('cronjobs');
         
         $cronjobs['tweets_imports'] = array(
-            'frequency' => '*/5 * * * *',
+            'frequency' => '* * * * *',
             'callback'  => '\PlaygroundSocial\Cron\Tweet::import',
             'args'      => array(),
         );
         
         $cronjobs['instagram_imports'] = array(
-            'frequency' => '*/5 * * * *',
+            'frequency' => '* * * * *',
             'callback'  => '\PlaygroundSocial\Cron\Instagram::import',
             'args'      => array(),
         );

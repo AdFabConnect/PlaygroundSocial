@@ -11,6 +11,8 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\InputFilter\Factory as InputFactory;
 use Doctrine\Common\Collections\ArrayCollection;
+use PlaygroundCore\Filter\Slugify;
+
 
 
 /**
@@ -54,6 +56,16 @@ class Service implements InputFilterAwareInterface
      * @ORM\Column(type="string", nullable=false)
      */
     protected $type;
+
+     /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $slug;
 
     /**
      * @ORM\Column(name="connection_type", type="string", nullable=false)
@@ -133,6 +145,31 @@ class Service implements InputFilterAwareInterface
     public function getId()
     {
         return $this->id;
+    }
+
+     public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+        $slugify = new Slugify;
+        $this->setSlug($slugify->filter($name));
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
     }
 
     public function getType()

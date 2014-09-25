@@ -34,6 +34,7 @@ class Service extends EventProvider implements ServiceManagerAwareInterface
 
         $service = new ServiceEntity();
         $service->setType($data['type']);
+        $service = $service->setName($data['name']);
         $service->setConnectionType($data['connectionType']);
         $service->setUsername($data['username']);
         $service->setPassword($data['password']);
@@ -71,6 +72,7 @@ class Service extends EventProvider implements ServiceManagerAwareInterface
         }
 
         $service->setType($data['type']);
+        $service = $service->setName($data['name']);
         $service->setConnectionType($data['connectionType']);
         $service->setUsername($data['username']);
         $service->setPassword($data['password']);

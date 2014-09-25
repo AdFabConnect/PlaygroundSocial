@@ -51,7 +51,7 @@ class Instagram extends EventProvider implements ServiceManagerAwareInterface
             $lastExecuteds =  $this->getServiceManager()
                                 ->get('playgroundsocial_element_service')
                                 ->getElementMapper()
-                                ->findBy(array('service' => $service), array('socialId', 'DESC'));
+                                ->findByAndOrderBy(array('service' => $service), array('socialId' => 'DESC'));
             
             if (count($lastExecuteds) > 0) {
                 $lastExecuted = $lastExecuteds[0];
@@ -117,9 +117,9 @@ class Instagram extends EventProvider implements ServiceManagerAwareInterface
                     $this->log($this->getService()->getHashtag().' - instagram ID : '.$tweet['id'].' don\'t imported : duplicate instagram', CronController::WARN);
                     
                     if ($nbTweets > 0) {
-                        $this->log($this->getService()->getHashtag().' : '.$nbTweets.' instagram imported' , CronController::SUCCESS);
+                        $this->log($this->getService()->getHashtag().'-'.$this->getService()->getId().' : '.$nbTweets.' instagram imported' , CronController::SUCCESS);
                     } else {
-                        $this->log($this->getService()->getHashtag().' : '.$nbTweets.' instagram imported' , CronController::WARN); 
+                        $this->log($this->getService()->getHashtag().'-'.$this->getService()->getId().' : '.$nbTweets.' instagram imported' , CronController::WARN); 
                     }
 
                     exit;

@@ -137,7 +137,7 @@ return array(
                 'route'    => '/social/elements',
                 'defaults' => array(
                     'controller' => 'PlaygroundSocial\Controller\ElementAdmin',
-                    'action'     => 'list',
+                    'action'     => 'index',
                 ),
             ),
             'may_terminate' => true,

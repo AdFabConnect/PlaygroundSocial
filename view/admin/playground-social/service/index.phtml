@@ -49,6 +49,7 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>Name (Slug)</th>
           <th>Locales</th>
           <th>Type</th>
           <th>Type of Connection</th>
@@ -67,6 +68,7 @@
         <?php endif; ?>
         <tr class="<?php echo $className; ?>">
             <td><?php echo $service->getId(); ?></td>
+            <td><?php echo $service->getName().'('.$service->getSlug().')'; ?></td>
             <td>
                 <?php foreach ($service->getLocales() as $locale)  :?>
                     <span><img src="<?php echo $locale->getFlag() ?>.png" alt="<?php echo $this->translate($locale->getName()); ?>"/></span>

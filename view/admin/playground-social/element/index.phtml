@@ -1,0 +1,114 @@
+<?php $this->plugin('translate')->setTranslatorTextDomain('playgroundgallery'); ?>
+
+<?php foreach ($this->flashMessenger()->setNamespace('playgroundgallery')->getMessages() as $message): ?>
+    <?php echo  $this->translate($message); ?>
+<?php endforeach ?>
+<?php 
+?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php echo $this->translate('Sort and order your elements'); ?></h3>
+    </div>
+    <div class="panel-body">
+        <form class="form" role="form" action="" method="post">
+        <div class="col-xs-6 col-sm-6">
+          <div class="form-group">
+            <input type="hidden" name="filters[category]" value="<?php echo $this->categoryId; ?>" />
+            <label><?php echo $this->translate('Service') ?> : </label> <br />
+              <select name="filters[service]" class="form-control" >
+                <option>Tous</option>
+                <?php foreach ($this->services as $service) : ?>
+                    <option value="<?php echo $service->getId(); ?>"><?php echo $service->getName(); ?></option>
+                <?php endforeach; ?>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-6">
+         <div class="form-group">
+            <label><?php echo $this->translate('Date') ?> : </label> <br />
+            <div>
+            <input type="datetime" class="form-control date" name="filters[datestart]" value="<?php echo !empty($data['datestart']) ?  $data['datestart'] : ''; ?>" placeholder="<?php echo $this->translate('begin date'); ?> (mm/dd/yyyy)"  /> 
+              <p class="text-muted text-center"><?php echo $this->translate('to'); ?></p> 
+              <input type="datetime" class="form-control date" name="filters[dateend]" value="<?php echo !empty($data['dateend']) ?  $data['dateend'] : ''; ?>" placeholder="<?php echo $this->translate('ended date'); ?> (mm/dd/yyyy)"  />
+          </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+            <button type="submit" class="btn btn-success pull-right "><?php echo $this->translate('validate'); ?></button>
+        </form>
+    </div>
+</div>
+<a data-toggle="modal" href="<?php echo $this->url('admin/playgroundsocial_social_service_create'); ?>" type="button" class="btn btn-primary pull-right"><?php echo $this->translate('Add a Service'); ?></a>
+
+<div class="clearfix"></div>
+<h1 class="f-left"><?php echo $this->translate('Services'); ?></h1>
+<div class="row">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Service</th>
+          <th>Author</th>
+          <th>Image</th>
+          <th>Text</th>
+          <th>Datetime</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($this->elementsPaginator as $element) : ?>
+        <?php $className = ""; ?>
+        <?php if($element->getStatus() <= 1) : ?>
+            <?php $className = "success"; ?>
+        <?php endif; ?>
+        <?php if($element->getStatus() == 0) : ?>
+            <?php $className = "danger"; ?>
+        <?php endif; ?>
+        <?php if($element->getService()->getPromote() == 1 && $element->getStatus() == 2): ?>
+            <?php $className = "info"; ?>  
+        <?php endif; ?>
+        <tr class="<?php echo $className; ?>">
+            <td><?php echo $element->getId(); ?></td>
+            <td><?php echo $element->getService()->getName(); ?></td>
+            <td><?php echo $element->getAuthor(); ?></td>
+            <td><img src="<?php echo $element->getImage(); ?>" style="width:100px;"/></td>
+            <td><?php echo utf8_decode($element->getText()); ?></td>
+            <td><?php echo $element->getTimestamp()->format('m/d/Y H:i:s'); ?></td>
+            <td>
+              <td>
+                <?php if($element->getService()->getPromote() == 1) : ?>
+                  <?php if($element->getStatus() == 1 ) : ?>
+                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                        <button type="button" class="btn btn-info">Promote</button>
+                    </a>
+                  <?php endif; ?>
+                  <?php if($element->getStatus() == 2 ) : ?>
+                    <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                        <button type="button" class="btn btn-warning">Un Promote</button>
+                    </a>
+                  <?php endif; ?>
+                <?php endif; ?>
+                <?php if($element->getStatus() == 0 ) : ?>
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_edit', array('id' => $element->getId())); ?>">
+                    <button type="button" class="btn btn-warning">Activate</button>
+                </a>
+                <?php else : ?>
+                <a href="<?php echo $this->url('admin/playgroundsocial_social_service_delete', array('id' => $element->getId())); ?>">
+                    <button type="button" class="btn btn-danger">Desactivate</button>
+                </a>
+                <?php endif; ?>
+            </td>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+</div>
+<hr />
+<?php $paginator =  $this->paginationControl($this->elementsPaginator , 'Sliding', 'playground-social/partial/pagination.phtml', array('uri' => $this->url('admin/playgroundsocial_social_element'), "countResults" => $this->nbElements)); ?> 
+  <?php if(strlen($paginator) > 10) :?>
+          <div class="divider"></div>
+          <?php echo $paginator; ?>
+  <?php endif; ?>
+  <div class="clearfix"></div>
