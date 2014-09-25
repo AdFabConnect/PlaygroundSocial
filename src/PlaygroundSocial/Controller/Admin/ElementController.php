@@ -21,7 +21,7 @@ class ElementController extends AbstractActionController
     public function indexAction()
     {
         $filters = array();
-        $elements = $this->getElementService()->getElementMapper()->findByAndOrderBy($filters, array('id' => 'DESC'));
+        $elements = $this->getElementService()->getElementMapper()->findBy($filters, array('id' => 'DESC'));
         $p = $this->getRequest()->getQuery('page', 1);
 
         $nbElements = count($elements);

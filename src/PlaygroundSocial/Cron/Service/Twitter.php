@@ -54,7 +54,7 @@ class Twitter extends EventProvider implements ServiceManagerAwareInterface
             $lastExecuteds =  $this->getServiceManager()
                                 ->get('playgroundsocial_element_service')
                                 ->getElementMapper()
-                                ->findByAndOrderBy(array('service' => $service), array('socialId' => 'DESC'));
+                                ->findBy(array('service' => $service), array('socialId' => 'DESC'));
             
             if (count($lastExecuteds) > 0) {
                 $lastExecuted = $lastExecuteds[0];

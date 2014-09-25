@@ -23,6 +23,9 @@ return array(
 
                 array('controller' => 'playgroundcore_console', 'roles' => array('guest', 'user')),
 
+                array('controller' => 'PlaygroundSocial\Controller\Api\Api', 'roles' => array('guest', 'user')),
+                array('controller' => 'PlaygroundSocial\Controller\Api\Element', 'roles' => array('guest', 'user')),
+
             ),
         ),
     ),
@@ -79,6 +82,7 @@ return array(
 
   'router' => array(
     'routes' => array(
+
       'admin' => array(
         'child_routes' => array(
           'playgroundsocial_social_service' => array(
@@ -176,6 +180,44 @@ return array(
           ),
         ),
       ),
+        'api' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/api',
+                    'defaults' => array(
+                        'controller' => 'PlaygroundSocial\Controller\Api\Api',
+                        'action'     => 'index',
+                    ),
+                ),
+                'child_routes' => array(
+                    'list' =>  array(
+                       'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/list',
+                            'defaults' => array(
+                                'controller' => 'PlaygroundSocial\Controller\Api\Api',
+                                'action'     => 'index',
+                            ),
+                        ),
+
+                    ),
+                    'elements' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/elements/service/:service[/limit/:limit][/offset/:offset]',
+                            'constraints' => array(
+                                'offset' => '[0-9]*',
+                                'limit' => '[0-9]*',
+                                'service' => '[a-z0-9-_]*',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'PlaygroundSocial\Controller\Api\Element',
+                                'action'     => 'list',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
     ),
 
     'core_layout' => array(
@@ -192,6 +234,10 @@ return array(
         'invokables' => array(
             'PlaygroundSocial\Controller\ServiceAdmin' => 'PlaygroundSocial\Controller\Admin\ServiceController',
             'PlaygroundSocial\Controller\ElementAdmin' => 'PlaygroundSocial\Controller\Admin\ElementController',
+
+            'PlaygroundSocial\Controller\Api\Api'     => 'PlaygroundSocial\Controller\Api\ApiController',
+            'PlaygroundSocial\Controller\Api\Element' => 'PlaygroundSocial\Controller\Api\ElementController',
+
         ),
     ),
     

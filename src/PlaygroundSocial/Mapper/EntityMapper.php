@@ -37,6 +37,17 @@ class EntityMapper
     }
 
     /**
+    * findBy : recupere des entites en fonction de filtre
+    * @param array $filter tableau de filtre
+    *
+    * @return collection $comments collection de Synthesio\Entity\Comment
+    */
+    public function findBy($filter, $order = null, $limit = null, $offset = null)
+    {
+        return $this->getEntityRepository()->findBy($filter, $order, $limit, $offset);
+    }
+    
+    /**
     * findById : recupere l'entite en fonction de son id
     * @param int $id id du entity
     *
@@ -46,42 +57,6 @@ class EntityMapper
     {
 
         return $this->getEntityRepository()->find($id);
-    }
-
-    /**
-    * findBy : recupere des entites en fonction de filtre
-    * @param array $array tableau de filtre
-    *
-    * @return collection $entities collection de PlaygroundPublishing\Entity\Entity
-    */
-    public function findBy($array)
-    {
-
-        return $this->getEntityRepository()->findBy($array);
-    }
-
-    /**
-    * findOneBy : recupere des entites en fonction de filtre
-    * @param array $array tableau de filtre
-    *
-    * @return collection $entities collection de PlaygroundPublishing\Entity\Entity
-    */
-    public function findOneBy($array)
-    {
-
-        return $this->getEntityRepository()->findOneBy($array);
-    }
-
-    /**
-    * findByAndOrderBy : recupere des entites en fonction de filtre
-    * @param array $by tableau de filtre
-    * @param array $sortArray tableau de sort
-    *
-    * @return collection $entities collection de PlaygroundPublishing\Entity\Entity
-    */
-    public function findByAndOrderBy($by = array(), $sortArray = array())
-    {
-        return $this->getEntityRepository()->findBy($by, $sortArray);
     }
 
     /**
