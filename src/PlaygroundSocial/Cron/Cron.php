@@ -32,22 +32,22 @@ class Cron
 
     public function success($message)
     {
-        echo "\033[32m".$message."\033[37m"."\n";
+        // echo "\033[32m".$message."\033[37m"."\n";
     }
 
     public function debug($message)
     {
-        echo "\033[34m".$message."\033[37m"."\n";
+        // echo "\033[34m".$message."\033[37m"."\n";
     }
 
     public function warning($message)
     {
-        echo "\033[33m".$message."\033[37m"."\n";
+        // echo "\033[33m".$message."\033[37m"."\n";
     }
 
     public function error($message)
     {
-        echo "\033[31m".$message."\033[37m"."\n";
+        // echo "\033[31m".$message."\033[37m"."\n";
     }
    
 }
