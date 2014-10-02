@@ -142,9 +142,10 @@ class Twitter extends EventProvider implements ServiceManagerAwareInterface
                 $tweetEntity->setAuthor($tweet['user']['screen_name']);
 
                 $tweetEntity->setTimestamp($dateTime);
-                if(!empty($tweet['entities']['media'])){
+               
+                if(!empty($tweet['user']['profile_image_url'])){
                     $imageName = $dateTime->format('YmdHis')."_".$tweet['id_str'].'_'.$tweet['user']['screen_name'].'.jpg';
-                    $image = file_get_contents($tweet['entities']['media'][0]['media_url']);
+                    $image = file_get_contents($tweet['user']['profile_image_url']);
                     if (!is_dir(__DIR__.'/../../../../../../../public/twitter')) {
                         mkdir(__DIR__.'/../../../../../../../public/twitter');
                         chmod(__DIR__.'/../../../../../../../public/twitter', 0777);
@@ -153,7 +154,7 @@ class Twitter extends EventProvider implements ServiceManagerAwareInterface
                     file_put_contents($path, $image);
                     chmod($path, 0777);
                     $tweetEntity->setImage("/twitter/".$imageName);
-                    $tweetEntity->setSocialImage($tweet['entities']['media'][0]['media_url']);
+                    $tweetEntity->setSocialImage($tweet['user']['profile_image_url']);
                 }
 
                 $tweetEntity->setText(utf8_encode($tweet['text']));
