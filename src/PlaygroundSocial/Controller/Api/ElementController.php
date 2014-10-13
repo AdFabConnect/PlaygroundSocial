@@ -90,10 +90,10 @@ class ElementController extends AbstractActionController
 
 
         if($offset > 0) {
-            $return['pagination']['previous'] = '/api/elements/service/'.$service->getName().'/limit/'.$limit.'/offset/'.($offset-1);     
+            $return['pagination']['previous'] = '/api/elements/service/'.$service->getSlug().'/limit/'.$limit.'/offset/'.($offset-1);     
         }
 
-        $return['pagination']['next'] = '/api/elements/service/'.$service->getName().'/limit/'.$limit.'/offset/'.($offset+1);
+        $return['pagination']['next'] = '/api/elements/service/'.$service->getSlug().'/limit/'.$limit.'/offset/'.($offset+1);
 
 
         $response->setContent(json_encode($return));
