@@ -30,8 +30,8 @@ class ElementController extends AbstractActionController
         $response->setStatusCode(200);
 
         $service = strtolower($this->getEvent()->getRouteMatch()->getParam('service'));
-        $offset = strtolower($this->params()->fromQuery('offset',null));
-        $limit = strtolower($this->params()->fromQuery('limit',null));
+        $offset = strtolower($this->params()->fromQuery('offset',0));
+        $limit = strtolower($this->params()->fromQuery('limit',20));
 
         if (empty($service)) {
             $return['status'] = 1;
