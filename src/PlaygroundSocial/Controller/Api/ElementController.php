@@ -30,10 +30,8 @@ class ElementController extends AbstractActionController
         $response->setStatusCode(200);
 
         $service = strtolower($this->getEvent()->getRouteMatch()->getParam('service'));
-        $offset = strtolower($this->getEvent()->getRouteMatch()->getParam('offset'));
-        $limit = strtolower($this->getEvent()->getRouteMatch()->getParam('limit'));
-
-       
+        $offset = strtolower($this->params()->fromQuery('offset',0));
+        $limit = strtolower($this->params()->fromQuery('limit',20));
 
         if (empty($service)) {
             $return['status'] = 1;
@@ -92,10 +90,10 @@ class ElementController extends AbstractActionController
 
 
         if($offset > 0) {
-            $return['pagination']['previous'] = '/api/elements/service/twitter-tf1/limit/'.$limit.'/offset/'.($offset-1);     
+            $return['pagination']['previous'] = '/api/elements/service/'.$service->getName().'/limit/'.$limit.'/offset/'.($offset-1);     
         }
 
-        $return['pagination']['next'] = '/api/elements/service/twitter-tf1/limit/'.$limit.'/offset/'.($offset+1);
+        $return['pagination']['next'] = '/api/elements/service/'.$service->getName().'/limit/'.$limit.'/offset/'.($offset+1);
 
 
         $response->setContent(json_encode($return));
